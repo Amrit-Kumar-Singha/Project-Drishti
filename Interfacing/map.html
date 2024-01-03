@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Realtime GPS Tracker</title>
+    <link rel="stylesheet" href="map.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="bg"></div>
+    <div class="bg-others">
+      <div class="container">
+        <h1
+          style="
+            font-size: 40px;
+            font-weight: bold;
+            border: 2px solid #ffffff;
+            padding: 10px;
+          "
+        >
+          Project DRISHTI
+        </h1>
+        <!-- Added styles -->
+        <center>
+          <hr
+            style="
+              height: 2px;
+              border: none;
+              color: #ffffff;
+              background-color: #ffffff;
+              width: 35%;
+              margin: 0 auto 0 auto;
+            "
+          />
+        </center>
+        <p style="font-size: 24px">Realtime GPS Tracker</p>
+        <center><div id="map-canvas"></div></center>
+
+        <!-- Add Button to Open Dummy Page -->
+        <button
+          onclick="openDummyPage()"
+          style="position: absolute; top: 300px; right: 50px; cursor: pointer"
+        >
+          CAMERA ACCESS
+        </button>
+
+        <button
+          onclick="openMicAccess()"
+          style="position: absolute; top: 340px; right: 50px; cursor: pointer"
+        >
+          MIC ACCESS
+        </button>
+      </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+    <script>
+      window.lat = 37.785;
+      window.lng = -122.4383;
+
+      var map;
+      var mark;
+      var lineCoords = [];
+
+      var initialize = function () {
+        map = new google.maps.Map(document.getElementById("map-canvas"), {
+          center: { lat: lat, lng: lng },
+          zoom: 12,
+        });
+        mark = new google.maps.Marker({
+          position: { lat: lat, lng: lng },
+          map: map,
+        });
+      };
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBE9Sv-C4mSO1ZeyPLl8uv59qExaPNJLj4",
+        authDomain: "drishti-ab653.firebaseapp.com",
+        projectId: "drishti-ab653",
+        storageBucket: "drishti-ab653.appspot.com",
+        messagingSenderId: "495917202335",
+        appId: "1:495917202335:web:47b9f422b86e8ee1939baa",
+        measurementId: "G-RM7KE7CJME",
+      };
+
+      window.initialize = initialize;
+
+      firebase.initializeApp(firebaseConfig);
+
+      var ref = firebase.database().ref();
+
+      ref.on(
+        "value",
+        function (snapshot) {
+          var gps = snapshot.val();
+          console.log(gps.LAT);
+          console.log(gps.LNG);
+          lat = gps.LAT;
+          lng = gps.LNG;
+
+          map.setCenter({ lat: lat, lng: lng, alt: 0 });
+          mark.setPosition({ lat: lat, lng: lng, alt: 0 });
+
+          lineCoords.push(new google.maps.LatLng(lat, lng));
+
+          var lineCoordinatesPath = new google.maps.Polyline({
+            path: lineCoords,
+            geodesic: true,
+            strokeColor: "#2E10FF",
+          });
+
+          lineCoordinatesPath.setMap(map);
+        },
+        function (error) {
+          console.log("Error: " + error.code);
+        }
+      );
+    </script>
+    <script>
+      // Your existing JavaScript code here
+
+      function openDummyPage(url) {
+        // Open a dummy webpage in a new tab
+        url = "http://192.168.78.86:5000/camera";
+        window.open(url, "Camera Access");
+      }
+      function openMicAccess() {
+        // Open the mic_access.html file in a new tab
+        window.open("mic_access.html", "_blank");
+      }
+      // Rest of your JavaScript code
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCERw-we2HlQe0WQcY4j-M9HXBwzycZgUg&callback=initialize"></script>
+  </body>
+</html>

@@ -1,0 +1,76 @@
+<!-- mic_access.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mic Access</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-image: url("cam_mic.jpg"); /* Replace 'your_image.jpg' with the path to your image */
+        background-size: cover;
+        background-position: center;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      h1 {
+        color: #fff; /* Set the text color to white for better visibility */
+        font-size: 40px;
+      }
+
+      #micData {
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.8
+        ); /* Semi-transparent white background */
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+        margin-top: 20px;
+        max-width: 800px;
+        width: 100%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>MIC ACCESS</h1>
+    <div id="micData"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.20.0/firebase-database.js"></script>
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyBE9Sv-C4mSO1ZeyPLl8uv59qExaPNJLj4",
+        authDomain: "drishti-ab653.firebaseapp.com",
+        projectId: "drishti-ab653",
+        storageBucket: "drishti-ab653.appspot.com",
+        messagingSenderId: "495917202335",
+        appId: "1:495917202335:web:47b9f422b86e8ee1939baa",
+        measurementId: "G-RM7KE7CJME",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+
+      var database = firebase.database();
+
+      var micDataRef = database.ref("Text"); // Replace 'Text' with your actual child node key
+
+      micDataRef.on("value", function (snapshot) {
+        var micData = snapshot.val();
+        document.getElementById("micData").textContent = micData;
+      });
+    </script>
+  </body>
+</html>
