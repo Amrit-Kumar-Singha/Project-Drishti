@@ -5,14 +5,14 @@ In crowded events such as fairs, carnivals, and festivals, the presence of polic
 
 ## Methodology-
 
-Tools needed (hardware)-
+### Tools needed (hardware)-
 1. Raspberry Pi 4 model B (4GB RAM)
 2. U-Blox Neo-6M GPS Module
 3. Mini USB Microphone 2.0 (for Raspberry Pi)
 5. Digital Webcam
 6. Raspberry Pi 4 Case
 
-Tools needed (software)-
+### Tools needed (software)-
 1. Google Maps API
 2. HTML and CSS
 3. OpenCV (python)
@@ -22,8 +22,6 @@ Tools needed (software)-
 7. Raspbian OS
 8. FireBase Database
 9. VS Code
-
-## STEPS-
 
 ### Step-1: Geo-Fencing:
 The U-Blox Neo-6M GPS Module will provide Raspberry Pi with real-time GPS Coordinates of the User carrying the device. The Geo-Fencing algorithm will keep a constant track of the user's GPS coordinates, whether he/she is there in their predefined designated area or not.
